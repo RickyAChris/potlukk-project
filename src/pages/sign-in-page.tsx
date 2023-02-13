@@ -3,7 +3,8 @@
 export function SignInPage(){
 
     return <>
-    <h1>Sign In</h1>
+    
+    <h1>Sign-In</h1>
     <label>User Name:</label>
     <input type="text" placeholder="johndoe"></input>
 
@@ -15,5 +16,6 @@ export function SignInPage(){
 
     <label>New User</label>
     <button>Sign Up</button>
+
     </>
 }
