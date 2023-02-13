@@ -3,6 +3,6 @@
 export function SignInPage(){
 
     return <>
-        <h1>Sign-in Page</h1>
+        <h1>Sign-In</h1>
     </>
 }
