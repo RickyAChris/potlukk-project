@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { User, createUser, getAllUsers, UserCreation } from "../api/sign-in-requests"
-
+import { useNavigate } from "react-router-dom"
 
 
 type UserForm = {
@@ -15,6 +15,7 @@ type UserForm = {
 
 
 export function RegistrationPage(){
+    const navigate = useNavigate();
     const [form,setForm] = useState<UserForm>({
         username:"",
          password:"", 
@@ -59,9 +60,9 @@ export function RegistrationPage(){
             lname: form.lname,
             allergies: form.allergies
         }
-        createUserMutation.mutate(newUser);
+        createUser(newUser);
         alert("Account Successfully Created!");
-        window.location.href = "/";
+        navigate("/");
     }
 
 
@@ -117,6 +118,10 @@ export function RegistrationPage(){
 
 
     
+
+function useEffect(arg0: () => void, arg1: never[]) {
+    throw new Error("Function not implemented.")
+}
     // function updateAllergy(e:any){
     //     const newValue = e.target.value;
     //     if (newValue){
