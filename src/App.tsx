@@ -1,4 +1,5 @@
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { HomePage } from './pages/home-page';
 import { PotlukkDetailsGuestPage } from './pages/potlukk-details-guest-page';
@@ -6,9 +7,11 @@ import { PotlukkDetailsHostPage } from './pages/potlukk-details-host-page';
 import { RegistrationPage } from './pages/registration-page';
 import { SignInPage } from './pages/sign-in-page';
 
+const queryClient = new QueryClient();
+
 function App() {
   return <>
-
+  <QueryClientProvider client={queryClient} contextSharing={true}>
     <BrowserRouter>
 
     <Routes>
@@ -21,7 +24,7 @@ function App() {
 
 
     </BrowserRouter>
-  
+  </QueryClientProvider>
   </>
 }
 
