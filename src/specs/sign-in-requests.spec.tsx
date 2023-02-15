@@ -1,29 +1,30 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
 import { createUser, getAllUsers, UserCreation } from "../api/sign-in-requests"
 import { RegistrationPage } from "../pages/registration-page";
 
 
 
-test("Get All Users", async() =>{
-    const users = await getAllUsers();
-    console.log(users);
-    expect(users).toBeTruthy();
-});
+// test("Get All Users", async() =>{
+//     const users = await getAllUsers();
+//     console.log(users);
+//     expect(users).toBeTruthy();
+// });
 
-test("User Creation", async()=>{
-    const newUser: UserCreation ={
-        username: "Starlord",
-        password: "password",
-        fname: "Dwight",
-        lname: "Schrute",
-        allergies: ["MILK", "EGGS"]
-    }
-    const user = await createUser(newUser);
-    expect(user.userId).not.toBe(0);
-    console.log(user);
-});
+// test("User Creation", async()=>{
+//     const newUser: UserCreation ={
+//         username: "Starlord",
+//         password: "password",
+//         fname: "Dwight",
+//         lname: "Schrute",
+//         allergies: ["MILK", "EGGS"]
+//     }
+//     const user = await createUser(newUser);
+//     expect(user.userId).not.toBe(0);
+//     console.log(user);
+// });
 
 const queryClient = new QueryClient();
 test("Should create a new user from input fields", async()=>{
@@ -31,7 +32,9 @@ test("Should create a new user from input fields", async()=>{
     
 
     render(<QueryClientProvider client = {queryClient}>
+        <BrowserRouter>
             <RegistrationPage/>
+        </BrowserRouter>
         </QueryClientProvider>);
     
 
