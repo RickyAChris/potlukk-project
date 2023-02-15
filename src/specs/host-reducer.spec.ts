@@ -3,8 +3,9 @@ import { HostPageReducer, PotlukkDataAction, PotlukkDataState, User } from "../c
 
 test('INVITE_USER', () => {
     const userState: PotlukkDataState = {
-        time:'',
-        date:'',
+        hostId: 101,
+        title: '',
+        time:1301,
         location: '',
         description: '',
         isPublic: false,
@@ -25,8 +26,9 @@ test('INVITE_USER', () => {
 
 test('REMOVE_USER', () =>{
     const userState: PotlukkDataState = {
-        time:'',
-        date:'',
+        hostId: 101,
+        title:'',
+        time:1301,
         location: '',
         description: '',
         isPublic: false,
