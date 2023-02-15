@@ -8,8 +8,9 @@ export type User = {
 };
 
 export type PotlukkDataState = {
-    time: string,
-    date: string,
+    hostId: number,
+    title: string
+    time: number,
     location: string,
     description: string,
     isPublic: boolean,
@@ -20,14 +21,14 @@ export type PotlukkDataState = {
 export type SetUsersAction = {type:'SET_USERS', payload: User[]};
 export type InviteUserAction = {type:'INVITE_USER', payload: number};
 export type RemoveUserAction = {type:'REMOVE_USER', payload: number};
-export type SetTimeAction = {type:'SET_TIME', payload: string};
-export type SetDateAction = {type:'SET_DATE', payload: string};
+export type SetTitleAction = {type:'SET_TITLE', payload: string};
+export type SetDateTimeAction = {type:'SET_DATE_TIME', payload: number};
 export type SetLocationAction = {type:'SET_LOCATION', payload: string};
 export type SetDescriptionAction = {type:'SET_DESCRIPTION', payload: string};
 export type SetPublicAction = {type:'SET_PUBLIC', payload: boolean};
 
 export type PotlukkDataAction = SetUsersAction | InviteUserAction | RemoveUserAction |
-SetTimeAction | SetDateAction | SetLocationAction | SetDescriptionAction | SetPublicAction
+SetDateTimeAction | SetLocationAction | SetDescriptionAction | SetPublicAction | SetTitleAction
 
 
 export function HostPageReducer(state: PotlukkDataState, action: PotlukkDataAction): PotlukkDataState{
@@ -60,14 +61,15 @@ export function HostPageReducer(state: PotlukkDataState, action: PotlukkDataActi
                 return state;
             }
         }
-        case 'SET_TIME':{
+        case 'SET_TITLE': {
+            newState.title = action.payload;
+            return newState;
+        }
+        case 'SET_DATE_TIME':{
             newState.time = action.payload;
             return newState;
         }
-        case 'SET_DATE':{
-            newState.date = action.payload;
-            return newState;
-        }
+
         case 'SET_LOCATION':{
             newState.location = action.payload;
             return newState;
