@@ -19,7 +19,9 @@ export function SignInPage(){
     //     const user = localStorage.getItem('user');
     // },[]);
 
-
+    function ToRegistration(){
+        navigate("/registration")
+    }
 
 
 
@@ -36,7 +38,7 @@ export function SignInPage(){
 
 
     <label>New User</label>
-    <button>Sign Up</button>
+    <button onClick={ToRegistration}>Sign Up</button>
 
     </>
 }
