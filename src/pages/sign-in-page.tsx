@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { authenticateUser } from '../api/sign-in-requests';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import '../styles.css';
 
 export function SignInPage(){
     const navigate = useNavigate();
@@ -27,18 +28,37 @@ export function SignInPage(){
 
     return <>
     
-    <h1>Sign-In</h1>
-    <label>User Name:</label>
-    <input type="text" placeholder="johndoe" onChange={e=>setUsername(e.target.value)}/>
+    <div className="container1">
+        <div className="label">
+            <h1>Sign-In</h1>
+        </div> 
+        <div className="signin"> 
+            <div>
+                <label>User Name:</label>
+                <input type="text" placeholder="johndoe" onChange={e=>setUsername(e.target.value)}/>
+            </div>
 
-    <label>Password:</label>
-    <input type="text" placeholder="*******" onChange={e=>setPassword(e.target.value)}/>
+            <div>
+                <label>Password:</label>
+                <input type="text" placeholder="*******" onChange={e=>setPassword(e.target.value)}/>
+            </div>
 
-    <button onClick={handleSubmit}>Sign In</button>
+            <div>
+                <button onClick={handleSubmit}>Sign In</button>
+            </div>
 
+        </div>
+        <div className="signup">
+            <div>
+                <label>New User</label>
+            </div>
 
-    <label>New User</label>
-    <button onClick={ToRegistration}>Sign Up</button>
+            <div>
+                <button onClick={ToRegistration}>Sign Up</button>
+            </div>
+            
+        </div>
+    </div>
 
     </>
 }

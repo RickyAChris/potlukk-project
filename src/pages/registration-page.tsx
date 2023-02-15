@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { User, createUser, getAllUsers, UserCreation } from "../api/sign-in-requests"
 import { useNavigate } from "react-router-dom"
+import '../styles.css';
 
 
 type UserForm = {
@@ -86,32 +87,53 @@ export function RegistrationPage(){
 
 
     return <>
-        <h1>Registration Page</h1>
+    <div className="container2">
+        <div className="pagetitle">
+            <h1>Registration Page</h1>
+        </div>
 
-    <label>Create Username</label>
-    <input type="text" placeholder="janedoe123" onChange={e=>setForm({...form, username:e.target.value})}></input>
+        <div className="usercreate">
+            <div>
+                <label>Create Username </label>
+                <input type="text" placeholder="janedoe123" onChange={e=>setForm({...form, username:e.target.value})}></input>
+            </div>
 
-    <label>Create Password</label>
-    <input type="text" placeholder="abc1234567!" onChange={e=>setForm({...form, password:e.target.value})}></input>
+            <div>
+                <label>Create Password </label>
+                <input type="text" placeholder="abc1234567!" onChange={e=>setForm({...form, password:e.target.value})}></input>
+            </div>
 
-    <label>Confirm Password</label>
-    <input type="text" placeholder="retype" onChange={e=>setForm({...form, confirmPassword:e.target.value})}></input>
+            <div>
+                <label>Confirm Password </label>
+                <input type="text" placeholder="retype" onChange={e=>setForm({...form, confirmPassword:e.target.value})}></input>
+            </div>
 
-    <label>First Name</label>
-    <input type="text" placeholder="Jane" onChange={e=>setForm({...form, fname:e.target.value})}></input>
+            <div>
+                <label>First Name </label>
+                <input type="text" placeholder="Jane" onChange={e=>setForm({...form, fname:e.target.value})}></input>
+            </div>
 
-    <label>Last Name</label>
-    <input type="text" placeholder="Doe" onChange={e=>setForm({...form, lname:e.target.value})}></input>
-
-    <h3>Allergens</h3>
-    
-    <input type="checkbox" id="MILK" onChange={checkBoxHandler}/><label htmlFor="MILK">Milk</label>
-    <input type="checkbox" id="EGG" onChange={checkBoxHandler}/><label htmlFor="EGG">Egg</label>
-    <input type="checkbox" id="SOY" onChange={checkBoxHandler}/><label htmlFor="SOY">Soy</label>
-    <input type="checkbox" id="TREENUTS" onChange={checkBoxHandler}/><label htmlFor="TREENUTS">Tree Nuts</label>
-
-    <button onClick={addUser}>Submit</button>
-
+            <div>
+                <label>Last Name </label>
+                <input type="text" placeholder="Doe" onChange={e=>setForm({...form, lname:e.target.value})}></input>
+            </div>
+        </div>
+        <div className="allergens">
+            <div>
+                <h3>Allergens</h3>
+            </div>
+            
+            <div>
+                <input type="checkbox" id="MILK" onChange={checkBoxHandler}/><label htmlFor="MILK">Milk</label>
+                <input type="checkbox" id="EGG" onChange={checkBoxHandler}/><label htmlFor="EGG">Egg</label>
+                <input type="checkbox" id="SOY" onChange={checkBoxHandler}/><label htmlFor="SOY">Soy</label>
+                <input type="checkbox" id="TREENUTS" onChange={checkBoxHandler}/><label htmlFor="TREENUTS">Tree Nuts</label>
+            </div>
+        </div>
+            <div className="submit">
+                <button onClick={addUser}>Submit</button>
+            </div>
+    </div>
     </>
 }
 
