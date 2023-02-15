@@ -1,0 +1,91 @@
+/* Container for Sign in Page*/
+.container1 {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1.5fr 0.5fr 1.5fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "label label label"
+      ". signin ."
+      ". signup ."
+      ". . .";
+  }
+  
+  .label { 
+    grid-area: label;
+    text-align: center; 
+}
+
+  .signin { 
+    grid-area: signin; 
+    text-align: center; 
+}
+
+  .signup { 
+    grid-area: signup;
+    text-align: center;  
+}
+
+.signin div {
+    padding: 10px;
+}
+
+.signup div {
+    padding: 3px;
+}
+
+.signin button {
+    background-color:deepskyblue;
+    border-radius:10%;
+}
+
+.signup button {
+    background-color:deepskyblue;
+    border-radius:10%;
+}
+
+/* Container for Registration Page*/
+.container2 {  
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "pagetitle pagetitle"
+      "usercreate allergens"
+      "submit submit";
+  }
+  
+  .pagetitle { 
+    grid-area: pagetitle;
+    text-align: center; 
+}
+
+  .usercreate { 
+    grid-area: usercreate;
+    text-align: center; 
+}
+  
+  .allergens {
+     grid-area: allergens;
+     text-align: center; 
+}
+
+.submit {
+    grid-area: submit;
+     text-align: center; 
+}
+
+.usercreate div {
+    padding: 3px;
+}
+
+.submit button {
+    background-color:deepskyblue;
+    border-radius:10%;
+}
+  
+
+  
