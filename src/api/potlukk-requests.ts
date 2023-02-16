@@ -14,7 +14,6 @@ export type PotlukkCreation = {
 }
 
 export async function createPotlukk(newPotlukk: PotlukkCreation):Promise<{potlukkId:number}>{
-    console.log('Creating potlukk: ', newPotlukk);
     const query = `mutation CreatePotlukk($potlukkInput: PotlukkCreationInput!) {
         createPotlukk(input: $potlukkInput) {
           potlukkId
@@ -37,16 +36,41 @@ export async function createPotlukk(newPotlukk: PotlukkCreation):Promise<{potluk
         };
         
     const requestBody: string = JSON.stringify({query, variables});
+    console.log(requestBody);
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
     const responseBody = await httpResponse.json();
     console.log(responseBody);
     const potlukkDetails:{potlukkId:number} = responseBody.data.createPotlukk;
+    console.log(potlukkDetails);
     return potlukkDetails;
 }
 
-// export type InviteCreation = {
+export type InviteCreation = {
+  potlukkId: number,
+  potlukkerId: number,
+}
 
-// }
+export async function sendInvite(newInvite: InviteCreation):Promise<{potlukkId: number}>{
+    const query = `mutation sendInvite($inviteInfo: InvitationSendInput!){
+      sendInvite(input: $inviteInfo){
+        potlukkId
+      }
+    }`
 
-// export async function sendInvite()
+    const variables = {
+      inviteInfo: {
+        potlukkId: newInvite.potlukkId,
+        potlukkerId: newInvite.potlukkerId
+      }
+    }
+    const requestBody: string = JSON.stringify({query, variables});
+    const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
+    const responseBody = await httpResponse.json();
+    console.log(requestBody);
+    const potlukkDetails:{potlukkId:number} = responseBody.data.createPotlukk;
+    console.log(potlukkDetails);
+    return potlukkDetails;
+
+}
+
 
