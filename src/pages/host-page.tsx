@@ -2,8 +2,9 @@ import { useEffect, useReducer, useState } from "react";
 import { getAllUsers, User } from "../api/sign-in-requests";
 import { NavBar } from "../components/navbar";
 import { HostPageReducer, PotlukkDataState, SetUsersAction } from "../components/host-page-reducer";
-import { createPotlukk, PotlukkCreation } from "../api/potlukk-requests";
+import { createPotlukk, InviteCreation, PotlukkCreation, sendInvite } from "../api/potlukk-requests";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const initialState: PotlukkDataState = {
     hostId: 10,
@@ -16,9 +17,15 @@ const initialState: PotlukkDataState = {
     selectedUsers:[]
 }
 
+function useHostId() {
+    const {data: userId} = useQuery("usercache", () => (Number(localStorage.getItem("userid"))));
+    return userId ?? -1; 
+}
+
 export function HostPage(){
     const [potlukkState, dispatch] = useReducer(HostPageReducer, initialState);
     const navigate = useNavigate();
+    const hostId = useHostId();
 
     useEffect(() => {
         (async () => {
@@ -32,8 +39,7 @@ export function HostPage(){
       }, []);
     
     const handleCreate = async () => {
-        const userIdString: string = localStorage.getItem('userId') ?? '';
-        const hostId = isNaN(parseInt(userIdString)) ? 10 : parseInt(userIdString);
+        console.log(hostId);
         const potlukkCreation: PotlukkCreation ={
             hostId: hostId,
             details: {
@@ -46,11 +52,17 @@ export function HostPage(){
                 status: 'SCHEDULED'
             }
         };
-        // invitations: {
-        //     lukkers: potlukkState.selectedUsers
-        // }
-        console.log("Creating potlukk with data: ", potlukkCreation);
-        createPotlukk(potlukkCreation);
+        const potlukk = await createPotlukk(potlukkCreation);
+        console.log(potlukk.potlukkId);
+        for(const user of potlukkState.selectedUsers){
+            const inviteCreation: InviteCreation ={
+                potlukkId: potlukk.potlukkId,
+                 potlukkerId: user.userId
+             };
+             console.log(sendInvite(inviteCreation))
+             const invitation = await sendInvite(inviteCreation);
+             console.log('Invitation Successfully sent to user ', user.username , ' with data: ', invitation );
+         }
         alert("Potlukk Successfully Created!");
         navigate("/potlukkinfohost/:potlukkID");
     }
