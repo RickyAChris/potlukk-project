@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { getAllUsers, User } from "../api/sign-in-requests";
 import { NavBar } from "../components/navbar";
 import { HostPageReducer, PotlukkDataState, SetUsersAction } from "../components/host-page-reducer";
-import { createPotlukk, InviteCreation, PotlukkCreation, sendInvite } from "../api/potlukk-requests";
+import { createPotlukk, GetAllDishes, InviteCreation, PotlukkCreation, sendInvite } from "../api/potlukk-requests";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 
@@ -39,7 +39,6 @@ export function HostPage(){
       }, []);
     
     const handleCreate = async () => {
-        console.log(hostId);
         const potlukkCreation: PotlukkCreation ={
             hostId: hostId,
             details: {

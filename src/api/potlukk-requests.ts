@@ -36,12 +36,9 @@ export async function createPotlukk(newPotlukk: PotlukkCreation):Promise<{potluk
         };
         
     const requestBody: string = JSON.stringify({query, variables});
-    console.log(requestBody);
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
     const responseBody = await httpResponse.json();
-    console.log(responseBody);
     const potlukkDetails:{potlukkId:number} = responseBody.data.createPotlukk;
-    console.log(potlukkDetails);
     return potlukkDetails;
 }
 
@@ -52,10 +49,10 @@ export type InviteCreation = {
 
 export async function sendInvite(newInvite: InviteCreation):Promise<{potlukkId: number}>{
     const query = `mutation sendInvite($inviteInfo: InvitationSendInput!){
-      sendInvite(input: $inviteInfo){
-        potlukkId
-      }
-    }`
+                      sendInvite(input: $inviteInfo){
+                        potlukkId
+                      }
+                    }`
 
     const variables = {
       inviteInfo: {
@@ -66,11 +63,110 @@ export async function sendInvite(newInvite: InviteCreation):Promise<{potlukkId: 
     const requestBody: string = JSON.stringify({query, variables});
     const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
     const responseBody = await httpResponse.json();
-    console.log(requestBody);
-    const potlukkDetails:{potlukkId:number} = responseBody.data.createPotlukk;
-    console.log(potlukkDetails);
-    return potlukkDetails;
+    const inviteDetails:{potlukkId:number} = responseBody.data.createPotlukk;
+    return inviteDetails;
 
 }
 
+export type DishCreation = {
+  potlukkId: number,
+  dishes: {
+    name: string,
+    description: string,
+    broughtBy: number,
+    serves: number,
+    allergens:string[]
+  }
+}
 
+export async function CreateDish(newDish: DishCreation): Promise<{potlukkId: number}>{
+  const query = `mutation CreateDish($dishInput: DishesSwapInput!){
+                  swapPotlukkDishes(input: $dishInput){
+                    potlukkId
+                  }
+                }`
+  
+  const variables = {
+    potlukkId: newDish.potlukkId,
+    dishes: {
+      name: newDish.dishes.name,
+      description: newDish.dishes.description,
+      broughtBy: newDish.dishes.broughtBy,
+      serves: newDish.dishes.serves,
+      allergens: newDish.dishes.allergens
+    }
+  }
+  const requestBody: string = JSON.stringify({query, variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
+  const responseBody = await httpResponse.json();
+  console.log(requestBody);
+  const dishCreationDetails:{potlukkId:number} = responseBody.data.createPotlukk;
+  console.log(dishCreationDetails);
+  return dishCreationDetails;
+}
+
+type PotlukksWithId = {
+  potlukkId: number,
+  host:{
+    userId: number
+  }
+}
+
+export async function GetPotlukkByHostId(hostId: number): Promise<number[]>{
+  const query = `query GetPotlukkByHostId {
+                  potlukks {
+                    potlukkId
+                    host{
+                    userId
+                    }
+                  }
+                }`;
+  const variables = {};
+  const requestBody: string = JSON.stringify({query, variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
+  const responseBody = await httpResponse.json();
+  const potlukks = responseBody.data.potlukks;
+  const matchingPotlukks = potlukks.filter((potlukk:PotlukksWithId) => potlukk.host.userId === hostId);
+  if(matchingPotlukks.length > 0){
+    return matchingPotlukks.map((potlukk: PotlukksWithId) => potlukk.potlukkId);
+  } else {
+    throw new Error("Potlukk not found for hostId ${hostId}");
+  }
+}
+
+type Dish = {
+  potlukkId: number,
+    dishes: {
+      name: string,
+      description: string,
+      broughtBy: string,
+      serves: number,
+      allergens: string[]
+    }
+}
+
+export async function GetAllDishes(potlukkId: number): Promise<Dish[]>{
+  const query = `query GetAllDishes{
+                  potlukks{
+                    potlukkId
+                    dishes{
+                      name
+                      description
+                      broughtBy
+                      serves
+                      allergens
+                    }
+                  }
+               }`
+  const variables = {};
+  const requestBody: string = JSON.stringify({query, variables});
+  const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
+  const responseBody = await httpResponse.json();
+  const dishes = responseBody.data.dishes;
+  const matchingDishes = dishes.filter((dish:Dish) => dish.potlukkId === potlukkId);
+  if(matchingDishes.length > 0){
+    return matchingDishes.map((dish: Dish) => dish.dishes);
+  } else {
+    throw new Error("Potlukk not found for potlukk ${potlukkId}");
+  }
+}
