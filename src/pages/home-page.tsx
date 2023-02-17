@@ -1,8 +1,7 @@
 import { getPotlukks } from "../api/home-requests";
 import { NavBar } from "../components/navbar";
 import { useQuery } from "react-query"
-
-export function HomePage(){
+// import { useEffect, useState } from "react";
 
 // User Features
 
@@ -11,17 +10,9 @@ export function HomePage(){
 // Shows potlukks the lukker is hosting
 // Clicking on one forwards the user to a potlukk details page for the potlukk
 
-const {isLoading, data =[]} = useQuery("usercache", () => getPotlukks(Number(localStorage.getItem("userId"))));
-if(isLoading){
-    return<h1>LOADING</h1>
-}
-
-
-
 // Invited Potlukks          
 // Shows potlukks the lukker was invited too
 // Clicking on one forwards the user to a potlukk details page for the potlukk
-
 
 // Notifications
 // Shows all notifications that are related to the person
@@ -33,6 +24,14 @@ if(isLoading){
 // clicking logout clears local storage and redirects to signin
 
 
+export function HomePage(){
+
+
+const {isLoading:isLoading, data:data =[]} = useQuery("usercache", () => getPotlukks(Number(localStorage.getItem("userid"))));
+if(isLoading){
+    return<h1>LOADING</h1>
+}   
+
     return <>
         <h1>Home Page</h1>
         <NavBar/>
@@ -42,9 +41,8 @@ if(isLoading){
         <tr><th>Invited Potlukks</th></tr>
         </thead>
         <tbody>
-        <tr><td>test</td></tr>
-        <tr><td>test</td></tr>
-        <tr><td>test</td></tr>
+        <tr>{data.map(p => (<>{(<td>{p.details.title}</td>)}
+        <td>{p.invitations.map(i => (i.potlukker.userId))}</td> </>))}</tr>
        </tbody>
        </table>
             
@@ -53,9 +51,7 @@ if(isLoading){
         <tr><th>Attending Potlukks</th></tr>
         </thead>
         <tbody>
-        <tr>{data.map(p=> <td>{p.host.userId} {p.details.title}</td>)}</tr>
-        <tr><td>test</td></tr>
-        <tr><td>test</td></tr>
+        <tr>{data.map(p => <td>{p.host.userId} {p.details.title}</td>)}</tr>
        </tbody>
        </table>
 
