@@ -1,3 +1,7 @@
+import { SourceMap } from "module"
+import { useQuery } from "react-query"
+import { PotlukkDetailsGuestPage } from "../pages/potlukk-details-guest-page"
+
 type Host = {
     userId: number
 }
@@ -6,11 +10,20 @@ type Details = {
     title: string
 }
 
+type Potlukker = {
+  userId: number
+}
+
+type Invitations = {
+  potlukker: Potlukker
+  
+}
 
 type HostPotlukks = {
     host: Host
     details: Details
     potlukkId: number
+    invitations: Invitations[]
 }
 
 
@@ -24,6 +37,11 @@ export async function getPotlukks(hostId:number):Promise<HostPotlukks[]>{
           }
           details {
             title
+          }
+          invitations {
+            potlukker {
+              userId
+            }
           }
           potlukkId
         }
@@ -39,45 +57,6 @@ export async function getPotlukks(hostId:number):Promise<HostPotlukks[]>{
 }
 
 
-
-type Invitations = {
-  potlukker: {
-    userId: number
-    username: string
-  }
-}
-
-
-type PotlukkInvites = {
-  details: Details
-  invitations: Invitations
-  potlukkId: number
-
-}
-
-export async function getPotlukkInvites():Promise<PotlukkInvites[]>{
-  const query = `query InvitedPotlukks {
-    potlukks {
-      details {
-        title
-      }
-      invitations {
-        potlukker {
-          userId
-          username
-        }
-      }
-      potlukkId
-    }
-  }`
-
-  const requestBody:string = JSON.stringify({query:query});
-    const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
-    const responseBody = await httpResponse.json();
-    const potlukkInvite:PotlukkInvites[] = responseBody.data.potlukks;
-    console.log(potlukkInvite);
-    return potlukkInvite;
-}
 
 
 
