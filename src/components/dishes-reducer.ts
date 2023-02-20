@@ -1,13 +1,4 @@
-export type dishState = {
-    potlukkId: number,
-    dishes: {
-      name: string,
-      description: string,
-      broughtBy: string,
-      serves: number,
-      allergens: string[]
-    }
-}
+import {DishCreation, GetDish } from "../api/potlukk-requests";
 
 export type DishCreationState = {
     potlukkId: number,
@@ -17,12 +8,16 @@ export type DishCreationState = {
       broughtBy: number,
       serves: number,
       allergens:string[]
-    }
-    potlukkDishes:dishState[];
+    },
+
+    potlukkDishes: GetDish[]
   }
 
+
+
+
 export type SetPotlukkIdAction = {type:'SET_ID', payload: number} 
-export type SetDishesAction = {type:'SET_DISHES', payload: dishState[]}
+export type SetDishesAction = {type:'SET_DISHES', payload: GetDish[]};
 export type SetDishNameAction = {type:'SET_DISH_NAME', payload: string};
 export type SetDishDescriptionAction = {type:'SET_DISH_DESCRIPTION', payload: string};
 export type SetDishServesAction = {type:'SET_DISH_SERVES', payload: number};
