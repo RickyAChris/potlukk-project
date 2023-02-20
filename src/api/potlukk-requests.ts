@@ -86,16 +86,18 @@ export async function CreateDish(newDish: DishCreation): Promise<{potlukkId: num
                   }
                 }`
   
-  const variables = {
-    potlukkId: newDish.potlukkId,
-    dishes: {
-      name: newDish.dishes.name,
-      description: newDish.dishes.description,
-      broughtBy: newDish.dishes.broughtBy,
-      serves: newDish.dishes.serves,
-      allergens: newDish.dishes.allergens
-    }
-  }
+                const variables = {
+                  dishInput: {
+                    potlukkId: newDish.potlukkId,
+                    dishes: {
+                      name: newDish.dishes.name,
+                      description: newDish.dishes.description,
+                      broughtBy: newDish.dishes.broughtBy,
+                      serves: newDish.dishes.serves,
+                      allergens: newDish.dishes.serves
+                    }
+                  }
+                };
   const requestBody: string = JSON.stringify({query, variables});
   const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
   const responseBody = await httpResponse.json();
@@ -134,7 +136,7 @@ export async function GetPotlukkByHostId(hostId: number): Promise<number[]>{
   }
 }
 
-type Dish = {
+export type GetDish = {
   potlukkId: number,
     dishes: {
       name: string,
@@ -145,7 +147,7 @@ type Dish = {
     }
 }
 
-export async function GetAllDishes(potlukkId: number): Promise<Dish[]>{
+export async function GetAllDishes(potlukkId: number): Promise<GetDish[]>{
   const query = `query GetAllDishes{
                   potlukks{
                     potlukkId
@@ -163,9 +165,9 @@ export async function GetAllDishes(potlukkId: number): Promise<Dish[]>{
   const httpResponse = await fetch("http://127.0.0.1:8000/graphql", {method:"POST", body:requestBody, headers:{'Content-Type':"application/json"}});
   const responseBody = await httpResponse.json();
   const dishes = responseBody.data.dishes;
-  const matchingDishes = dishes.filter((dish:Dish) => dish.potlukkId === potlukkId);
+  const matchingDishes = dishes.filter((dish:GetDish) => dish.potlukkId === potlukkId);
   if(matchingDishes.length > 0){
-    return matchingDishes.map((dish: Dish) => dish.dishes);
+    return matchingDishes.map((dish: GetDish) => dish.dishes);
   } else {
     throw new Error("Potlukk not found for potlukk ${potlukkId}");
   }

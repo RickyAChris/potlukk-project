@@ -69,26 +69,37 @@ export function HostPage(){
     return <>
 
         <NavBar/>
+        <div className="container">
 
-        <label htmlFor="setTitle">Title</label>
-        <input type='text' id='setTitle' required
-        onChange={e => dispatch({type:'SET_TITLE', payload:e.target.value})}></input>
+             <div className="Create">
+                <div>
+                <label htmlFor="setTitle">Title</label>
+                <input type='text' id='setTitle' required
+                onChange={e => dispatch({type:'SET_TITLE', payload:e.target.value})}></input>
+                </div>
+                <div>
+                <label htmlFor="setTime">Time </label>
+                <input type="datetime-local" id="setTime" required
+                onChange={e => dispatch({type:'SET_DATE_TIME', payload:parseInt(e.target.value)})}/>
+                </div>
+                <div>
+                <input type="text" id="setLocation" placeholder="Location" required
+                onChange={e => dispatch({type:'SET_LOCATION', payload:e.target.value})}/>
+                </div>
+                <div>
+                <input type="text" id="setDescription" placeholder="Description" required
+                onChange={e => dispatch({type:'SET_DESCRIPTION', payload:e.target.value})}/>
+                </div>
+                <div>
+                <label htmlFor="setPublic">Make Public</label>
+                <input type="checkbox" id="setPublic"
+                onChange={e => dispatch({type:'SET_PUBLIC', payload:Boolean(e.target.checked)})}/>
+                </div>
+                <button onClick={handleCreate}>Create Potlukk</button>
+             </div>
 
-        <label htmlFor="setTime">Time </label>
-        <input type="datetime-local" id="setTime" required
-        onChange={e => dispatch({type:'SET_DATE_TIME', payload:parseInt(e.target.value)})}/>
-
-        <input type="text" id="setLocation" placeholder="Location" required
-        onChange={e => dispatch({type:'SET_LOCATION', payload:e.target.value})}/>
-
-        <input type="text" id="setDescription" placeholder="Description" required
-        onChange={e => dispatch({type:'SET_DESCRIPTION', payload:e.target.value})}/>
-
-        <label htmlFor="setPublic">Make Public</label>
-        <input type="checkbox" id="setPublic"
-        onChange={e => dispatch({type:'SET_PUBLIC', payload:Boolean(e.target.checked)})}/>
-
-        <fieldset>
+            <div className="Invite">
+            <fieldset>
             <legend>Invite Lukkers</legend>
             <table>
                 <tbody>
@@ -116,7 +127,10 @@ export function HostPage(){
             </table>
 
         </fieldset>
+            </div>
 
-        <button onClick={handleCreate}>Create Potlukk</button>
+        </div>
+
+
     </>
 }

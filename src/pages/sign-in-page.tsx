@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { authenticateUser } from '../api/sign-in-requests';
 import { useNavigate } from "react-router-dom";
-import '../styles.css';
+import '../styles/styles.css';
 
 export function SignInPage(){
     const navigate = useNavigate();

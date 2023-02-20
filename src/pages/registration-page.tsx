@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { User, createUser, getAllUsers, UserCreation } from "../api/sign-in-requests"
 import { useNavigate } from "react-router-dom"
-import '../styles.css';
+import '../styles/styles.css';
 
 
 type UserForm = {

@@ -1,6 +1,7 @@
 import { getPotlukks } from "../api/home-requests";
 import { NavBar } from "../components/navbar";
 import { useQuery } from "react-query"
+import '../styles/home-page-styles.css'
 // import { useEffect, useState } from "react";
 
 // User Features
@@ -33,42 +34,45 @@ if(isLoading){
 }   
 
     return <>
-        <h1>Home Page</h1>
-        <NavBar/>
+    <NavBar/>
+    <div className="container">
+        <div className="Invited">
+            <table>
+                <thead>
+                <tr><th>Invited Potlukks</th></tr>
+                </thead>
+                <tbody>
+                {data.map(p => (<tr>{(<td>{p.details.title}</td>)}
+                <td>{p.invitations.map(i => (i.potlukker.userId))}</td> </tr>))}
+            </tbody>
+        </table>
+        </div>
 
-       <table>
-        <thead>
-        <tr><th>Invited Potlukks</th></tr>
-        </thead>
-        <tbody>
-        <tr>{data.map(p => (<>{(<td>{p.details.title}</td>)}
-        <td>{p.invitations.map(i => (i.potlukker.userId))}</td> </>))}</tr>
-       </tbody>
-       </table>
-            
-       <table>
-        <thead>
-        <tr><th>Attending Potlukks</th></tr>
-        </thead>
-        <tbody>
-        <tr>{data.map(p => <td>{p.host.userId} {p.details.title}</td>)}</tr>
-       </tbody>
-       </table>
+        <div className="Attending">
+            <table>
+                <thead>
+                <tr><th>Invited Potlukks</th></tr>
+                </thead>
+                <tbody>
+                {data.map(p => (<tr>{(<td>{p.details.title}</td>)}
+                <td>{p.invitations.map(i => (i.potlukker.userId))}</td> </tr>))}
+                </tbody>
+            </table>
+        </div>
 
-        <table>
-        <thead>
-        <tr><th>Notifications</th></tr>
-        </thead>
-        <tbody>
-        <tr><td>test</td></tr>
-        <tr><td>test</td></tr>
-        <tr><td>test</td></tr>
-       </tbody>
-       </table>    
-            
+        <div className="Notifications">
+            <table>
+                <thead>
+                <tr><th>Notifications</th></tr>
+                </thead>
+                <tbody>
+                <tr><td>test</td></tr>
+                <tr><td>test</td></tr>
+                <tr><td>test</td></tr>
+                </tbody>
+            </table>   
+        </div>
+    </div>
     
-
-        
-       
     </>
 }

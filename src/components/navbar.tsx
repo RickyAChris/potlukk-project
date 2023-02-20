@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import '../styles/home-page-styles.css'
 
 export function NavBar(){
 
@@ -10,9 +10,9 @@ export function NavBar(){
     return <>
         <div className="NavBar">
 
-            <Link to='/home'>Home</Link>
-            <Link to='/host'>Host</Link>
-            <Link to='/' onClick={ClearLocalStorage}>Logout</Link>
+            <Link id='link' to='/home'><span>Home</span></Link>
+            <Link id='link' to='/host'><span>Host</span></Link>
+            <Link id='link' to='/' onClick={ClearLocalStorage}><span>Logout</span></Link>
 
         </div>
 
